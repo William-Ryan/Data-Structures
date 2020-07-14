@@ -27,7 +27,7 @@ class DoublyLinkedList:
     the old head node's previous pointer accordingly.
     """
     def add_to_head(self, value):
-        self.head = int(value)
+        self.head value
         return self.head
         pass
         
