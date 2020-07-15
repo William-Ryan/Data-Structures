@@ -29,3 +29,27 @@ class Stack:
             return None
         else:
             return (self.storage.pop())
+
+import sys
+sys.path.append('../singly_linked_list')
+from singly_linked_list import LinkedList
+
+class LLStack:
+    def __init__(self):
+        self.size = 0
+        self.storage = []
+
+    def __len__(self):
+        return len(self.storage)
+        pass
+
+    def push(self, value):
+        self.storage.append(value)
+        return self.storage
+        pass
+
+    def pop(self):
+        if(self.storage == []):
+            return None
+        else:
+            return (self.storage.pop())
