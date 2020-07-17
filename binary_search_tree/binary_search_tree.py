@@ -9,6 +9,15 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+import sys
+sys.path.append('../queue')
+from queue import Queue
+
+import sys
+sys.path.append('../stack')
+from stack import Stack
+
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -64,6 +73,14 @@ class BSTNode:
             return self.value
         else:
             return self.right.get_max()
+        # def get_max(self):
+        # max_value = self.value
+        # current = self
+        # while current:
+        #     if current.value > max_value:
+        #         max_value = current.value
+        #     current = current.right
+        # return max_value
 
         
 
@@ -75,26 +92,103 @@ class BSTNode:
         if self.right:
             self.right.for_each(fn)
 
-
-        
-        
+    def iterative_depth_first_for_each(self, cb):
+        stack = []
+        stack.append(self)
 
     # Part 2 -----------------------
+
+    # # Preorder
+    #     # visit logic
+    #     print(self.value)
+    #     # recurse left
+    #     self.left.fn()
+    #     # recurse right
+    #     self.right.fn()
+
+        # # Postorder
+        # # recurse left
+        # self.left.fn()
+
+        # # recurse right
+        # self.right.fn()
+
+        # # visit logic
+        # print(self.value)
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        # if the current node is None
+        # we know we've reached the end of a recursion
+        # (base case) we want to return
+        if self is None:
+            return
+
+        # check if we can "move left"
+        if self.left is not None:
+            self.left.in_order_print()
+
+        # visit the node by printing its value
+        print(self.value)
+        
+        # check if we can "move right"
+        if self.right is not None:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        queue = Queue()
+        # if the current node is None
+        if self is None:
+            return
+        # Use a queue to form a "line" 
+        # for the nodes to "get in"
+        queue = Queue()
+        # start by placing the root in the queue
+        queue.enqueue(node)
+
+        # while length of queue is greater than 0
+        while queue.__len__() > 0:
+            # dequeue item from front of queue
+            n = queue.dequeue()
+            # print that item
+            print(n.value)
+
+            # place current item's left node in queue if not None
+            if n.left is not None:
+                queue.enqueue(n.left)
+            # place current item's right node in queue if not None
+            if n.right is not None:
+                queue.enqueue(n.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # if the current node is None
+        if self is None:
+            return
+        # initialize an empty stack
+        stack = Stack()
+        # push the root node onto the stack
+        stack.push(self.value)
+        # need a while loop to manager our iteration
+        # if stack is not empty enter the while loop
+        while stack.__len__() > 0:
+            # pop top item off the stack
+            value_to_print = stack.pop()
+            # print that item's value
+            print(value_to_print)
+            # if there is a right subtree
+            if self.right is not None:
+                # push right item onto the stack
+                self.right.dft_print(node)
+
+            # if there is a left subtree
+            if self.left is not None:
+                # push left item onto the stack
+                self.left.dft_print(node)       
 
     # Stretch Goals -------------------------
     # Note: Research may be required
